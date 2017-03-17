@@ -6,7 +6,7 @@
 
     <groupId>io.github.unguiculus.test</groupId>
     <artifactId>test</artifactId>
-    <version>0.6-SNAPSHOT</version>
+    <version>0.6-20170317.143312-6717eb2</version>
     <packaging>pom</packaging>
 
     <scm>
