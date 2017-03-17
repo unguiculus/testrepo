@@ -56,7 +56,7 @@
                                 <contextUrl>https://mx1.jfrog.io/mx1</contextUrl>
                                 <username>${env.ARTIFACTORY_USER}</username>
                                 <password>${env.ARTIFACTORY_PASSWORD}</password>
-                                <repoKey>maven-releases</repoKey>
+                                <repoKey>maven-staging</repoKey>
                                 <snapshotRepoKey>maven-snapshots</snapshotRepoKey>
                             </publisher>
                             <buildInfo>
