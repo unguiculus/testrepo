@@ -24,7 +24,7 @@ pipeline {
 
         stage('Code Analysis') {
             steps {
-                lock('code_analysis', inversePrecedence: true) {
+                lock(resource: 'code_analysis', inversePrecedence: true) {
                     withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
                         sh 'mvn sonar:sonar -Dsonar.host.url=http://jenkins03.sc.smartcast.de:9000'
                     }
