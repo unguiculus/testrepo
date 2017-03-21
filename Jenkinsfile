@@ -23,7 +23,7 @@ pipeline {
 
                 def version = readFile('target/app-version.properties')
 
-                echo version
+                sh 'echo version'
             }
         }
     }
