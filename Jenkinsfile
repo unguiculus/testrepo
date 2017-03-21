@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Set RC Version') {
             steps {
-                withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'artifactory-maven-settings') {
+                withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
                     sh './set_rc_version.sh'
                 }
             }
