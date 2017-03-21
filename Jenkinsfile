@@ -21,9 +21,10 @@ pipeline {
 
                 junit '**/target/surefire-reports/TEST-*.xml'
 
-                def version = readFile('target/app-version.properties')
-
-                sh 'echo version'
+                script {
+                    def version = readFile('target/app-version.properties')
+                    echo version
+                }
             }
         }
     }
