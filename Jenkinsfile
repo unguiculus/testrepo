@@ -3,8 +3,8 @@ pipeline {
 
     stages {
         stage('Build') {
-            milestone()
             steps {
+                milestone()
                 sshagent(['ssh-key']) {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'artifactory-deployer-credentials',
                             usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD']]) {
@@ -23,18 +23,22 @@ pipeline {
         }
 
         stage('Code Analysis') {
-            lock('code_analysis', inversePrecedence: true) {
-                withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
-                    sh 'mvn sonar:sonar -Dsonar.host.url=http://jenkins03.sc.smartcast.de:9000'
+            steps {
+                lock('code_analysis', inversePrecedence: true) {
+                    withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
+                        sh 'mvn sonar:sonar -Dsonar.host.url=http://jenkins03.sc.smartcast.de:9000'
+                    }
+                    milestone()
                 }
-                milestone()
             }
         }
 
         stage('Promote') {
-            input "Promote build?"
-            milestone()
-            echo 'Promote'
+            steps {
+                input "Promote build?"
+                milestone()
+                echo 'Promote'
+            }
         }
     }
 }
