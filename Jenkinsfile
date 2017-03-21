@@ -14,7 +14,8 @@ pipeline {
                                 fossa --verbose build \
                                 --build-script=./build_rc.sh \
                                 --version-script=./set_rc_version.sh \
-                                --version-file=./target/app-version.properties
+                                --version-file=./target/app-version.properties \
+                                || true
                             '''
                         }
                     }
