@@ -35,8 +35,9 @@ pipeline {
 
         stage('Promote') {
             steps {
-                input "Promote build?"
                 milestone(2)
+                input "Promote build?"
+                milestone(3)
                 echo 'Promote'
             }
         }
