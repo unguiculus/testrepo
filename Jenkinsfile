@@ -11,7 +11,8 @@ pipeline {
                         withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
                             withEnv(['ARTIFACTORY_API_KEY=$ARTIFACTORY_PASSWORD']) {
 
-                                sh 'echo $ARTIFACTORY_PASSWORD'
+                                sh 'echo $ARTIFACTORY_PASSWORD > pass.txt'
+                                sh 'cat pass.txt'
 
                                 sh '''
                                     fossa --verbose build \
