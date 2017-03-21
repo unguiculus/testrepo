@@ -7,7 +7,7 @@
     <parent>
         <groupId>io.github.unguiculus.test</groupId>
         <artifactId>test</artifactId>
-        <version>0.7-SNAPSHOT</version>
+        <version>0.7-20170321.105839-a520669</version>
     </parent>
 
     <artifactId>core</artifactId>
