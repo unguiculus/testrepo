@@ -6,7 +6,7 @@ public class TestTest {
 
     @Test
     public void test1() throws Exception {
-        //
+        throw new RuntimeException("foo");
     }
 
     @Test
