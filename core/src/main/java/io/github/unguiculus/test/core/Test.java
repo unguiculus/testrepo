@@ -6,6 +6,6 @@ package io.github.unguiculus.test.core;
 public class Test {
 
     public void test() {
-        //
+        throw new RuntimeException("foo");
     }
 }

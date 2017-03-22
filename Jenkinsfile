@@ -6,20 +6,17 @@ pipeline {
             steps {
                 milestone(0)
 
-                ansiColor {
-                    timestamps {
-                        sshagent(['ssh-key']) {
-                            withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'artifactory-deployer-credentials',
-                                    usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD']]) {
-                                withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
-                                    sh '''
-                                        fossa --verbose build \
-                                        --build-script=./build_rc.sh \
-                                        --version-script=./set_rc_version.sh \
-                                        --version-file=./target/app-version.properties \
-                                        || true
-                                    '''
-                                }
+                timestamps {
+                    sshagent(['ssh-key']) {
+                        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'artifactory-deployer-credentials',
+                                usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD']]) {
+                            withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
+                                sh '''
+                                    fossa --verbose build \
+                                    --build-script=./build_rc.sh \
+                                    --version-script=./set_rc_version.sh \
+                                    --version-file=./target/app-version.properties
+                                '''
                             }
                         }
                     }
@@ -30,13 +27,11 @@ pipeline {
         stage('Code Analysis') {
             steps {
                 lock(resource: 'code_analysis', inversePrecedence: true) {
-                    ansiColor {
-                        timestamps {
-                            withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
-                                sh 'mvn sonar:sonar -Dsonar.host.url=http://jenkins03.sc.smartcast.de:9000'
-                            }
-                            milestone(1)
+                    timestamps {
+                        withMaven(jdk: 'Java 8', maven: 'Maven 3.3.9', mavenLocalRepo: '.repository', mavenSettingsConfig: 'maven-settings') {
+                            sh 'mvn sonar:sonar -Dsonar.host.url=http://jenkins03.sc.smartcast.de:9000'
                         }
+                        milestone(1)
                     }
                 }
             }
